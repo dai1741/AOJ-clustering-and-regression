@@ -1,0 +1,46 @@
+# mine
+
+*.msg
+/*.html
+/*.xml
+*.xlsx
+trash/
+.depend
+
+# Node
+
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+npm-debug.log
+node_modules
+
+
+# C++
+
+*.exe
+*.stackdump
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
