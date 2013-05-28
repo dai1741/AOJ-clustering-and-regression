@@ -8,7 +8,7 @@
 // #include <boost/numeric/ublas/vector.hpp>
 #include <msgpack.hpp>
 
-#include "data-reader.hpp"
+#include "data-io.hpp"
 
 std::vector<Problem> readProblemData(const char* msgFilename) {
   std::ifstream file(msgFilename, std::ios::binary);

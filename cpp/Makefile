@@ -11,7 +11,7 @@ debug: CPPFLAGS+=-DDEBUG -g
 
 SRCS_SPHERICAL=\
 aoj-problem-spherical-k-means.cpp \
-data-reader.cpp \
+data-io.cpp \
 
 OBJS_SPHERICAL= $(SRCS_SPHERICAL:.cpp=.o)
 aoj-problem-spherical-k-means: $(OBJS_SPHERICAL)
