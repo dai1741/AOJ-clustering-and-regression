@@ -18,6 +18,8 @@ typedef reference_wrapper<const Problem> ProblemCRef;
 // 密ベクトル
 typedef vector<float> DenceVector;
 
+const bool kUseTfIdf = true;
+
 double computeCosine(const Problem& prob, const DenceVector& v) {
   double dot = 0;
   for (auto& desc : prob.descs) dot += v[desc.first] * desc.second;
@@ -166,18 +168,37 @@ int main(int argc, char* argv[]) {
   if (argc < 2) return 1;
   vector<Problem> problems = readProblemData(argv[1]);
 
+  int dim = max_element(ALL(problems), [](Problem& a, Problem& b) {
+                                         return a.descs.back().first < b.descs.back().first;
+                                       })->descs.back().first + 1;
+
+  if (kUseTfIdf) {
+    vector<int> sumTermInDoc(problems.size());  // not needed?
+    transform(ALL(problems), sumTermInDoc.begin(),
+        [](Problem& p) { return (int) accumulate(ALL(p.descs), 0,
+            [](int a, pair<int, float> b) -> int { return a+b.second; }); } );
+    vector<int> numInvDoc(dim);
+    for (auto& p : problems) {
+      for (auto& desc : p.descs) numInvDoc[desc.first]++;
+    }
+    for (unsigned int i = 0; i < problems.size(); i++) {
+
+      for (auto& desc : problems[i].descs) {
+        double idf = log(double(problems.size()) / numInvDoc[desc.first]);
+        desc.second *= idf;
+        desc.second /= sumTermInDoc[i];
+      }
+    }
+  }
+
   // normalize feature vectors in advance
-  // TODO: calc idf and use tf-idf
   for (auto& p : problems) {
-    double norm = sqrt( accumulate(p.descs.begin(), p.descs.end(), 0LL,
-        [](long long a, std::pair<int, int> b) { return a + (long long)b.second*b.second; }) );
+    long double norm = sqrt( accumulate(ALL(p.descs), 0.0,
+        [](long double a, std::pair<int, float> b) { return a + b.second*b.second; }) );
     for (auto& desc : p.descs) desc.second /= norm;
   }
 
   // gather some more info
-  int dim = max_element(ALL(problems), [](Problem& a, Problem& b) {
-                                         return a.descs.back().first < b.descs.back().first;
-                                       })->descs.back().first + 1;
   vector<ProblemCRef> problemRefs(ALL(problems));
   DenceVector meanDir = computeMeanDirection(problemRefs, DenceVector(dim));
 
