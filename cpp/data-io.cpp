@@ -33,9 +33,6 @@ std::vector<Problem> readProblemData(const char* msgFilename) {
           p.descs.emplace_back(*sIt++, *cIt++);
           // p.descs.back().second = 1;
         }
-        p.norm = sqrt( accumulate(p.descs.begin(), p.descs.end(), 0LL,
-            [](long long a, std::pair<int, int> b) { return a + (long long)b.second*b.second; }) );
-        // p.norm = 1;
         return p;
       });
   return probs;

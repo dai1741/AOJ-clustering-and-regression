@@ -7,7 +7,7 @@ struct Problem {
   // AOJでの問題番号
   int id;
   // 特徴ベクトル。疎ベクトルである。
-  std::vector<std::pair<int, int>> descs;
+  std::vector<std::pair<int, float>> descs;
   // 特徴ベクトルの長さ。球面k-meansではベクトルを長さ1に正規化して使う。
   double norm;
 };
