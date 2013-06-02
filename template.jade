@@ -1,0 +1,108 @@
+!!! 5
+meta(charset='UTF-8')
+title AOJ clustering
+:less
+  body {
+    line-height: 1.3;
+  }
+  #cluster-partitions ul {
+    margin-top: 0;
+    padding-left: 0;
+  }
+  #cluster-cloud a {
+    text-decoration: none;
+  }
+  .focus-solved a:not(.solved),
+  .focus-unsolved a.solved {
+    opacity: 0.3;  /* color: #bbb; */ /* display: none; */
+    &:hover, &.focused { opacity: 1 }
+    text-decoration: none;
+    font-size: 50%;
+    margin: 0 -0.2em;
+  }
+  // jadeのfilterがruntimeで動かない: https://github.com/visionmedia/jade/issues/853
+  // そのためlessにクラスタ数を渡せない。この辺参考にループしようとしたのだけど: https://github.com/twitter/bootstrap/blob/042bb9b51510573a9a1db6bc66cb16311d0d580b/less/mixins.less#L572
+  // 仕方がないので強引にstyle直書きする: http://stackoverflow.com/a/10970952/897061
+| <style>
+hslStr = function (hue, sat, lum) { return "hsl(" + hue + "," + sat + "%," + lum + "%)" };
+each cluster, clusterNo in clusters
+  hue = clusterNo/clusters.length*360*23%360
+  colFront = hslStr(hue, 50+clusterNo%5*10, 40-clusterNo%5*5)
+  colBack  = hslStr(hue, 100, 97-clusterNo%5)
+  colFocus = hslStr(hue, 80,  30-clusterNo%5)
+  | #{renderLessSync(".cluster-" + clusterNo + "{ color: " + colFront + "; background-color: " + colBack + "; &.focused { color: white; background-color: " + colFocus + " } }")}
+| </style>
+
+
+h1 AOJ clustering
+p AIZU ONLINE JUDGEの問題をクラスタリングしました。
+
+section#cluster-partitions
+  h2 クラスタ一覧
+
+  dl.clusters: each cluster, clusterNo in clusters
+    dt
+      span(class='cluster-'+clusterNo) cluster-#{pad0(clusterNo,2)}
+    dd
+      ul: each subcluster in cluster
+        li: each id in subcluster
+          probid = pad0(id,4)
+          a(href=aojProblemUrl+probid) #{probid}
+          | 
+
+section#some-functions
+  h2 おまけの機能
+  p 以下のフォームにAOJのユーザーIDを入れるなどすると解いた/解いてない問題を目立たなくします。重いので注意してください。
+
+  p ユーザーID：
+    input#user-id(type='text', size=15)
+    button.solved-checker#weaken-solved 解いた問題を弱調表示
+    button.solved-checker#weaken-unsolved 解いてない問題を弱調表示
+    button#stop-weaken 弱調表示をやめる
+
+
+section#cluster-cloud
+  h2#cluster-cloud-h 色分け表示
+
+  p 色が似ていてもそのクラスタ同士が似ているというわけではありません。
+
+  p.clusters
+    each clusterNo, id in problems
+      unless clusterNo == undefined
+        probid = pad0(id,4)
+        a(href=aojProblemUrl+probid, class='cluster-'+clusterNo, title='cluster-'+pad0(clusterNo,2)) #{probid}
+        | 
+
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+:coffeescript
+  solvedProblems = {}  # 無駄なリクエストを避けるための解いた問題リストのキャッシュ
+  curUserId = ""
+  $ ->
+    $('button.solved-checker').click ->
+      $self = $ this
+      userId = $('input#user-id').val()
+      if userId is '' or userId is curUserId then return
+
+      if userId of solvedProblems
+        curUserId = userId
+        $('.clusters a').removeClass('solved').each ->
+          if $(this).text() of solvedProblems[userId]
+            $(this).addClass('solved')
+      else
+        $.get "!{aojUserUrl}", { id: userId }, (data) ->
+          solvedProblems[userId] = {}
+          $(data).find('solved_list id').each ->
+            solvedProblems[userId][$(this).text().replace /\\D/g, ''] = 1
+          $self.click()
+
+    changeFocus = (newClass) -> ->
+      $('.clusters').removeClass('focus-unsolved focus-solved').addClass(newClass)
+    $('button#weaken-solved').click changeFocus 'focus-unsolved'
+    $('button#weaken-unsolved').click changeFocus 'focus-solved'
+    $('button#stop-weaken').click changeFocus ''
+
+    # damn, the word 'focus' has multiple meanings here
+    toggleFocus = ->
+      $(".#{$(this).attr('class').split(/\s+/).join('.')}").toggleClass('focused')
+    $('[class|=cluster]').click(toggleFocus).filter('a[href]').mousedown toggleFocus
+
