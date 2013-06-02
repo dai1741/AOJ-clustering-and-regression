@@ -38,7 +38,7 @@ std::vector<Problem> readProblemData(const char* msgFilename) {
   return probs;
 }
 
-bool writeClusters(const char* msgFilename, const std::vector<std::vector<std::vector<int>>>& clusters) {
+bool writeClusters(const char* msgFilename, const std::vector<std::vector<int>>& clusters) {
   msgpack::sbuffer buffer;
   msgpack::pack(&buffer, clusters);
   std::ofstream out(msgFilename, std::ios::binary);

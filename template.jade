@@ -44,11 +44,10 @@ section#cluster-partitions
     dt
       span(class='cluster-'+clusterNo) cluster-#{pad0(clusterNo,2)}
     dd
-      ul: each subcluster in cluster
-        li: each id in subcluster
-          probid = pad0(id,4)
-          a(href=aojProblemUrl+probid) #{probid}
-          | 
+      ul: li: each id in cluster
+        probid = pad0(id,4)
+        a(href=aojProblemUrl+probid) #{probid}
+        | 
 
 section#some-functions
   h2 おまけの機能

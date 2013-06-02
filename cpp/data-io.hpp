@@ -14,4 +14,4 @@ struct Problem {
 
 std::vector<Problem> readProblemData(const char* msgFilename);
 
-bool writeClusters(const char* msgFilename, const std::vector<std::vector<std::vector<int>>>& clusters);
+bool writeClusters(const char* msgFilename, const std::vector<std::vector<int>>& clusters);

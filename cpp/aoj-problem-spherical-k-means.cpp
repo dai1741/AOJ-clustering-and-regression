@@ -136,29 +136,13 @@ SphericalKMeans doSphericalKMeans(
   return bestResult;
 }
 
-// TODO: この関数をどうにかする
-vector<vector<vector<int>>> getMsgpackableClustersAndComputeSubclustersIfWanted(const SphericalKMeans& clusteringResult, int dim)
+vector<vector<int>> getMsgpackableClusters(const SphericalKMeans& clusteringResult, int dim)
 {
-  vector<vector<vector<int>>> res(clusteringResult.numClusters, vector<vector<int>>(1));
+  vector<vector<int>> res(clusteringResult.numClusters);
 
   for (int i = 0; i < clusteringResult.numClusters; i++) {
-    auto& res2 = res[i];
     auto& cluster = clusteringResult.clusters[i];
-
-    if (cluster.size() > 30) {
-      // 30を超えるサイズのクラスタは目で識別しづらいのでに再度クラスタリングする。
-      // kmeansで階層的にクラスタリングするのは理論的に間違ってるので本来このようなことをするべきでない
-      DenceVector meanDirSub = computeMeanDirection(cluster, DenceVector(dim));
-      int numSubClusters = 2 + cluster.size() / 60;  // てきとうにサイズをでっちあげる
-      SphericalKMeans prop = doSphericalKMeans(cluster, meanDirSub, numSubClusters);
-      res2.resize(numSubClusters);
-      for (int j = 0; j < numSubClusters; j++) {
-        for (auto& p : prop.clusters[j]) res2[j].push_back(p.get().id);
-      }
-
-    } else {
-      for (auto& p : cluster) res2[0].push_back(p.get().id);
-    }
+    for (auto& p : cluster) res[i].push_back(p.get().id);
   }
   return res;
 }
@@ -213,7 +197,7 @@ int main(int argc, char* argv[]) {
     clusteringResult.debugPrint();
 
     // write clusters to file
-    auto msgpackCls = getMsgpackableClustersAndComputeSubclustersIfWanted(clusteringResult, dim);
+    auto msgpackCls = getMsgpackableClusters(clusteringResult, dim);
     stringstream fnameStream;
     fnameStream << "../clusters-" << numClusters << ".msg";  // TODO: make fnames specifiable somewhere
     writeClusters(fnameStream.str().c_str(), msgpackCls);

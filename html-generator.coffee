@@ -19,16 +19,13 @@ fs.readFile clustersFilename, (err, data) ->
   # 見やすさのため番号順にクラスタをソート
   # 本当は重心ベクトルの類似度で分類したほうがいいがやり方わからない
   for cluster in clusters
-    for subcluster in cluster
-      subcluster.sort (a,b) -> a - b
-    cluster.sort (a,b) -> a[0] - b[0]
-  clusters.sort (a,b) -> a[0][0] - b[0][0]
+    cluster.sort (a,b) -> a - b
+  clusters.sort (a,b) -> a[0] - b[0]
 
   # 問題IDからクラスタ番号を得る配列を作る
   probs = []
   for cluster, clusterNo in clusters
-    for subcluster in cluster
-      probs[id] = clusterNo for id in subcluster
+    probs[id] = clusterNo for id in cluster
   # console.log clusters
   console.log probs
 
