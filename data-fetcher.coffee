@@ -4,7 +4,7 @@ async   = require 'async'
 fs      = require 'fs'
 msgpack = require 'msgpack'
 
-RANK_LIST_URL = "http://judge.u-aizu.ac.jp/onlinejudge/webservice/user_list?solved_min=100&solved_max=101"
+RANK_LIST_URL = "http://judge.u-aizu.ac.jp/onlinejudge/webservice/user_list?solved_min=10&solved_max=77777"
 USER_URL      = "http://judge.u-aizu.ac.jp/onlinejudge/webservice/user?id="
 
 # ユーザーIDで使えない文字にマッチするregex
