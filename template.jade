@@ -52,7 +52,7 @@ section#cluster-partitions
 section#some-functions
   h2 おまけの機能
   p 以下のフォームにAOJのユーザーIDを入れるなどすると解いた/解いてない問題を目立たなくします。重いので注意してください。
-
+  noscript: p Javascriptが無効ではだめです。
   p ユーザーID：
     input#user-id(type='text', size=15)
     button.solved-checker#weaken-solved 解いた問題を弱調表示
@@ -64,6 +64,9 @@ section#cluster-cloud
   h2#cluster-cloud-h 色分け表示
 
   p 色が似ていてもそのクラスタ同士が似ているというわけではありません。
+    br
+    | 問題IDをクリックするとそのクラスタを強調表示し、ダブルクリックで問題を開きます。
+  noscript: p Javascriptが無効なら強調表示しません。
 
   p.clusters
     each clusterNo, id in problems
@@ -101,7 +104,9 @@ script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
     $('button#stop-weaken').click changeFocus ''
 
     # damn, the word 'focus' has multiple meanings here
-    toggleFocus = ->
+    $('[class|=cluster]').click( (e) ->
+      e.preventDefault();
       $(".#{$(this).attr('class').split(/\s+/).join('.')}").toggleClass('focused')
-    $('[class|=cluster]').click(toggleFocus).filter('a[href]').mousedown toggleFocus
+    ).filter('a[href]').dblclick () ->
+      window.open $(this).attr('href'), "aoj"
 
