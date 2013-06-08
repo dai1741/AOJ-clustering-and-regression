@@ -18,8 +18,11 @@ fs.readFile clustersFilename, (err, data) ->
 
   # 見やすさのため番号順にクラスタをソート
   # 本当は重心ベクトルの類似度で分類したほうがいいがやり方わからない
-  for cluster in clusters
-    cluster.sort (a,b) -> a - b
+  for cluster, i in clusters
+    if cluster instanceof Array
+      cluster.sort (a,b) -> a - b
+    else
+      clusters[i] = [cluster]  # simple array conversion for R which cant distinguish 1-dim vector and scalar
   clusters.sort (a,b) -> a[0] - b[0]
 
   # 問題IDからクラスタ番号を得る配列を作る

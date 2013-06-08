@@ -7,6 +7,18 @@
 trash/
 .depend
 
+
+# R
+
+*.RData
+
+# History files
+.Rhistory
+
+# Example code in package build process
+*-Ex.R
+
+
 # Node
 
 lib-cov
