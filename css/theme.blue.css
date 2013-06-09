@@ -1,0 +1,130 @@
+/*************
+  Blue Theme
+ *************/
+/* overall */
+.difficulties {
+	background-color: #fff;
+	border-spacing: 0;
+	border: #cdcdcd 1px solid;
+	border-width: 1px 0 0 1px;
+}
+.difficulties th,
+.difficulties td {
+	border: #cdcdcd 1px solid;
+	border-width: 0 1px 1px 0;
+	padding: 0.2em 0.4em;
+}
+
+/* header */
+.difficulties th,
+.difficulties thead td {
+	font-size: 95%;
+	color: #000;
+	background-color: #99bfe6;
+	border-collapse: collapse;
+	text-shadow: 0 1px 0 rgba(204, 204, 204, 0.7);
+}
+.difficulties tbody td,
+.difficulties tfoot th,
+.difficulties tfoot td {
+	vertical-align: top;
+}
+.difficulties .header,
+.difficulties .tablesorter-header {
+	/* black (unsorted) double arrow */
+	background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+	/* white (unsorted) double arrow */
+	/* background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==); */
+	/* image */
+	/* background-image: url(images/black-unsorted.gif); */
+	background-repeat: no-repeat;
+	background-position: center right;
+	padding-right: 1.6em;
+	white-space: normal;
+	cursor: pointer;
+}
+.difficulties .headerSortUp,
+.difficulties .tablesorter-headerSortUp,
+.difficulties .tablesorter-headerAsc {
+	background-color: #9fbfdf;
+	/* black asc arrow */
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+	/* white asc arrow */
+	/* background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7); */
+	/* image */
+	/* background-image: url(images/black-asc.gif); */
+}
+.difficulties .headerSortDown,
+.difficulties .tablesorter-headerSortDown,
+.difficulties .tablesorter-headerDesc {
+	background-color: #8cb3d9;
+	/* black desc arrow */
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+	/* white desc arrow */
+	/* background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7); */
+	/* image */
+	/* background-image: url(images/black-desc.gif); */
+}
+.difficulties thead .sorter-false {
+	background-image: none;
+}
+
+/* tfoot */
+.difficulties tfoot .tablesorter-headerSortUp,
+.difficulties tfoot .tablesorter-headerSortDown,
+.difficulties tfoot .tablesorter-headerAsc,
+.difficulties tfoot .tablesorter-headerDesc {
+	/* remove sort arrows from footer */
+	background-image: none;
+}
+
+/* tbody */
+.difficulties td {
+	color: #3d3d3d;
+	background-color: #fff;
+	vertical-align: top;
+}
+
+/* table processing indicator */
+.difficulties .tablesorter-processing {
+	background-position: center center !important;
+	background-repeat: no-repeat !important;
+	/* background-image: url(../addons/pager/icons/loading.gif) !important; */
+	background-image: url('data:image/gif;base64,R0lGODlhFAAUAKEAAO7u7lpaWgAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBCgACACwAAAAAFAAUAAACQZRvoIDtu1wLQUAlqKTVxqwhXIiBnDg6Y4eyx4lKW5XK7wrLeK3vbq8J2W4T4e1nMhpWrZCTt3xKZ8kgsggdJmUFACH5BAEKAAIALAcAAAALAAcAAAIUVB6ii7jajgCAuUmtovxtXnmdUAAAIfkEAQoAAgAsDQACAAcACwAAAhRUIpmHy/3gUVQAQO9NetuugCFWAAAh+QQBCgACACwNAAcABwALAAACE5QVcZjKbVo6ck2AF95m5/6BSwEAIfkEAQoAAgAsBwANAAsABwAAAhOUH3kr6QaAcSrGWe1VQl+mMUIBACH5BAEKAAIALAIADQALAAcAAAIUlICmh7ncTAgqijkruDiv7n2YUAAAIfkEAQoAAgAsAAAHAAcACwAAAhQUIGmHyedehIoqFXLKfPOAaZdWAAAh+QQFCgACACwAAAIABwALAAACFJQFcJiXb15zLYRl7cla8OtlGGgUADs=') !important;
+}
+
+/* Zebra Widget - row alternating colors */
+.difficulties tbody tr.odd td {
+	background-color: #ebf2fa;
+}
+.difficulties tbody tr.even td {
+	background-color: #fff;
+}
+
+/* Column Widget - column sort colors */
+.difficulties td.primary,
+.difficulties tr.odd td.primary {
+	background-color: #99b3e6;
+}
+.difficulties tr.even td.primary {
+	background-color: #c2d1f0;
+}
+.difficulties td.secondary,
+.difficulties tr.odd td.secondary {
+	background-color: #c2d1f0;
+}
+.difficulties tr.even td.secondary {
+	background-color: #d6e0f5;
+}
+.difficulties td.tertiary,
+.difficulties tr.odd td.tertiary {
+	background-color: #d6e0f5;
+}
+.difficulties tr.even td.tertiary {
+	background-color: #ebf0fa;
+}
+
+/* caption */
+caption {
+	background: #fff;
+}
